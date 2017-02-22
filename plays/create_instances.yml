@@ -6,6 +6,7 @@
   vars:
     instance_type: 't2.micro'
     instance_image: 'ami-9062d0f4'
+    instance_count: 1
     region: 'ca-central-1'
     aws_zone: 'b'
     keypair: 'primary'
@@ -21,6 +22,7 @@
                   aws_zone='{{ region }}{{ aws_zone }}'
                   group_id={{ group_id }}
                   wait=true
+                  count={{ instance_count }}
     register: ec2
 
 

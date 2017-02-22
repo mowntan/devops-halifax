@@ -1,7 +1,34 @@
 ---
 
-- hosts: webservers
+- hosts: all
   roles:
     - geerlingguy.ntp
     - geerlingguy.nginx
-    - devops-halifax.app
+
+#  tasks:
+#    - name: install the latest version of git
+#      yum:
+#        name: git
+#        state: latest
+#
+#    - name: deploy devops-halifax webapp
+#      git:
+#        repo: https://github.com/mowntan/devops-halifax.git
+#        dest: /usr/share/nginx/html/devops-halifax/
+#      tags: deploy
+#
+#    - name: create symlink for webapp
+#      file:
+#        src: /usr/share/nginx/html/devops-halifax/html/index.html
+#        dest: /usr/share/nginx/html/index.html
+#        state: link
+#        force: yes
+#      tags: deploy
+#        
+#
+    ## ANOTHER OPTION
+    #-  get_url:
+    #-    url: https://github.com/mowntan/devops-halifax/blob/master/README.md
+    #-    dest: /usr/share/nginx/html
+    #-    mode: 0644
+

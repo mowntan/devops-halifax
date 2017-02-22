@@ -6,8 +6,14 @@
     state: latest
 
 - name: deploy devops-halifax webapp
-  get_url:
-    url: https://github.com/mowntan/devops-halifax/blob/master/README.md
-    dest: /usr/share/nginx/html
-    mode: 0644
+  git:
+    repo: https://github.com/mowntan/devops-halifax.git
+    dest: /usr/share/nginx/html/devops-halifax/
   tags: deploy
+
+## ANOTHER OPTION
+#-  get_url:
+#-    url: https://github.com/mowntan/devops-halifax/blob/master/README.md
+#-    dest: /usr/share/nginx/html
+#-    mode: 0644
+

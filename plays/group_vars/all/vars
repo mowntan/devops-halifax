@@ -1,0 +1,6 @@
+---
+
+ntp_enabled: true
+ntp_timezone: America/Halifax
+ntp_manage_config: true
+ntp_area: '.north-america'

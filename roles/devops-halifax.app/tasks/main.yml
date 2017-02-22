@@ -1,0 +1,13 @@
+---
+
+- name: install the latest version of git
+  yum:
+    name: git
+    state: latest
+
+- name: deploy devops-halifax webapp
+  get_url:
+    url: https://github.com/mowntan/devops-halifax/blob/master/README.md
+    dest: /usr/share/nginx/html
+    mode: 0644
+  tags: deploy

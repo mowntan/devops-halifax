@@ -1,0 +1,63 @@
+---
+
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    instance_type: 't2.micro'
+    instance_image: 'ami-9062d0f4'
+    region: 'ca-central-1'
+    aws_zone: 'b'
+  tasks:
+  - name: Launch ec2 instance (Application Server)
+    local_action: ec2 
+                  instance_type={{ instance_type }} 
+                  image={{ instance_image }} 
+                  keypair='primary'
+                  instance_tags='{"Environment":"DEV","Class":"Development","Name":"Application Server"}'
+                  region='{{region}}'
+                  aws_zone='{{ region }}{{ aws_zone }}'
+                  group_id='sg-436cb62a'
+                  wait=true
+    register: ec2
+
+
+  - name: Add new instance to host group
+    local_action: add_host hostname={{ item.public_ip }} groupname=launched
+    with_items: '{{ ec2.instances }}'
+
+  - name: Wait for instances to listen on port 22
+    wait_for:
+      state=started
+      host={{ item.public_dns_name }}
+      port=22
+      delay=30
+      timeout=600
+    with_items: '{{ ec2.instances }}'
+
+  - name: Launch ec2 instance (Database Server)
+    local_action: ec2 
+                  instance_type={{ instance_type }} 
+                  image={{ instance_image }} 
+                  keypair='primary'
+                  instance_tags='{"Environment":"DEV","Class":"Development","Name":"Database Server"}'
+                  region='{{region}}'
+                  aws_zone='{{ region }}{{ aws_zone }}'
+                  group_id='sg-6979a300'
+                  wait=true
+    register: ec2
+
+
+  - name: Add new instance to host group
+    local_action: add_host hostname={{ item.public_ip }} groupname=launched
+    with_items: '{{ ec2.instances }}'
+
+  - name: Wait for instances to listen on port 22
+    wait_for:
+      state=started
+      host={{ item.public_dns_name }}
+      port=22
+      delay=30
+      timeout=600
+    with_items: '{{ ec2.instances }}'
+

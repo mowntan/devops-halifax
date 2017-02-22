@@ -1,0 +1,7 @@
+---
+
+- hosts: webservers
+  roles:
+    - geerlingguy.ntp
+    - geerlingguy.nginx
+    - devops-halifax.app
